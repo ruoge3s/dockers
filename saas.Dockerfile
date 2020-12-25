@@ -70,7 +70,7 @@ RUN mkdir -p ${WORK_DIR} \
 && echo "export PATH" >> /etc/profile.d/php.sh \
 && source /etc/profile \
 && cd ${WORK_DIR} \
-&& curl -SL "https://github.com/swoole/swoole-src/archive/v${SWOOLE_VERSION}.tar.gz" -o swoole.tar.gz \
+&& curl -SL "https://github.com/swoole/swoole-src/archive/v4.5.2.tar.gz" -o swoole.tar.gz \
 && mkdir -p swoole \
 && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
 && cd swoole \
@@ -150,6 +150,7 @@ RUN mkdir -p ${WORK_DIR} \
 && echo "extension=redis.so" > ${PHP_INI_DIR}/conf.d/50_redis.ini \
 && php --ri redis \
 # 清除内容缓存内容
+&& rm -rf /usr/local/php72/php/man \
 && yum clean all \
 && rm -rf /var/cache/yum/* \
 && dnf clean all \
