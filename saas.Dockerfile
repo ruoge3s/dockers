@@ -82,8 +82,8 @@ RUN mkdir -p ${WORK_DIR} \
 && php --ri swoole \
 ## 安装memcache
 && source /etc/profile \
-&& curl -SL https://github.com/websupport-sk/pecl-memcache/archive/4.0.4.tar.gz -o memcache.tar.gz \
 && cd ${WORK_DIR} \
+&& curl -SL "https://github.com/websupport-sk/pecl-memcache/archive/4.0.4.tar.gz" -o memcache.tar.gz \
 && mkdir -p memcache \
 && tar -xf memcache.tar.gz -C memcache --strip-components=1 \
 && cd memcache \
@@ -94,7 +94,7 @@ RUN mkdir -p ${WORK_DIR} \
 && echo "extension=memcache.so" > ${PHP_INI_DIR}/conf.d/50_memcache.ini \
 && php --ri memcache \
 && cd ${WORK_DIR} \
-&& curl -SL https://launchpad.net/libmemcached/1.0/1.0.18/download/libmemcached-1.0.18.tar.gz -o libmemcached.tar.gz \
+&& curl -SL "https://launchpad.net/libmemcached/1.0/1.0.18/download/libmemcached-1.0.18.tar.gz" -o libmemcached.tar.gz \
 && mkdir -p libmemcached \
 && tar -xf libmemcached.tar.gz -C libmemcached --strip-components=1 \
 && cd libmemcached \
@@ -104,8 +104,8 @@ RUN mkdir -p ${WORK_DIR} \
 && make -s -j$(nproc) \
 && make install \
 && source /etc/profile \
-&& curl -SL https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz -o memcached.tar.gz \
 && cd ${WORK_DIR} \
+&& curl -SL "https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz" -o memcached.tar.gz \
 && mkdir -p memcached \
 && tar -xf memcached.tar.gz -C memcached --strip-components=1 \
 && cd memcached \
@@ -117,7 +117,7 @@ RUN mkdir -p ${WORK_DIR} \
 && php --ri memcached \
 # 安装amqp依赖、amqp
 && cd ${WORK_DIR} \
-&& curl -SL https://github.com/alanxz/rabbitmq-c/releases/download/v0.8.0/rabbitmq-c-0.8.0.tar.gz -o rabbitmq-c.tar.gz \
+&& curl -SL "https://github.com/alanxz/rabbitmq-c/releases/download/v0.8.0/rabbitmq-c-0.8.0.tar.gz" -o rabbitmq-c.tar.gz \
 && mkdir -p rabbitmq-c \
 && tar -xf rabbitmq-c.tar.gz -C rabbitmq-c --strip-components=1 \
 && cd rabbitmq-c \
@@ -125,8 +125,8 @@ RUN mkdir -p ${WORK_DIR} \
     && make -s -j$(nproc) \
     && make install \
 && source /etc/profile \
-&& curl -SL https://github.com/php-amqp/php-amqp/archive/v1.10.2.tar.gz -o rabbitmq.tar.gz \
 && cd ${WORK_DIR} \
+&& curl -SL "https://github.com/php-amqp/php-amqp/archive/v1.10.2.tar.gz" -o rabbitmq.tar.gz \
 && mkdir -p rabbitmq \
 && tar -xf rabbitmq.tar.gz -C rabbitmq --strip-components=1 \
 && cd rabbitmq \
@@ -138,8 +138,8 @@ RUN mkdir -p ${WORK_DIR} \
 && php --ri amqp \
 # 安装redis扩展
 && source /etc/profile \
-&&  cd ${WORK_DIR} \
-&& curl -SL https://github.com/phpredis/phpredis/archive/5.3.1.tar.gz -o redis.tar.gz \
+&& cd ${WORK_DIR} \
+&& curl -SL "https://github.com/phpredis/phpredis/archive/5.3.1.tar.gz" -o redis.tar.gz \
 && mkdir -p redis \
 && tar -xf redis.tar.gz -C redis --strip-components=1 \
 && cd redis \
