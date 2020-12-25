@@ -74,10 +74,10 @@ RUN mkdir -p ${WORK_DIR} \
 && mkdir -p swoole \
 && tar -xf swoole.tar.gz -C swoole --strip-components=1 \
 && cd swoole \
-&& phpize \
-&& ./configure --enable-mysqlnd --enable-openssl --enable-http2 \
-&& make -s -j$(nproc) \
-&& make install \
+    && phpize \
+    && ./configure --enable-mysqlnd --enable-openssl --enable-http2 \
+    && make -s -j$(nproc) \
+    && make install \
 && echo "extension=swoole.so" > ${PHP_INI_DIR}/conf.d/50_swoole.ini \
 && php --ri swoole \
 ## 安装memcache
@@ -87,32 +87,32 @@ RUN mkdir -p ${WORK_DIR} \
 && mkdir -p memcache \
 && tar -xf memcache.tar.gz -C memcache --strip-components=1 \
 && cd memcache \
-&& phpize \
-&& ./configure --disable-memcache-session \
-&& make -s -j$(nproc) \
-&& make install \
+    && phpize \
+    && ./configure --disable-memcache-session \
+    && make -s -j$(nproc) \
+    && make install \
 && echo "extension=memcache.so" > ${PHP_INI_DIR}/conf.d/50_memcache.ini \
 && php --ri memcache \
 && cd ${WORK_DIR} \
-&& curl -SL "https://launchpad.net/libmemcached/1.0/1.0.18/download/libmemcached-1.0.18.tar.gz" -o libmemcached.tar.gz \
+&& curl -SL "https://launchpad.net/libmemcached/1.0/1.0.18/+download/libmemcached-1.0.18.tar.gz" -o libmemcached.tar.gz \
 && mkdir -p libmemcached \
 && tar -xf libmemcached.tar.gz -C libmemcached --strip-components=1 \
 && cd libmemcached \
-&& sed -i '42c \ \ if (!opt_servers)' clients/memflush.cc \
-&& sed -i '51c \ \ if (!opt_servers)' clients/memflush.cc \
-&& ./configure \
-&& make -s -j$(nproc) \
-&& make install \
+    && sed -i '42c \ \ if (!opt_servers)' clients/memflush.cc \
+    && sed -i '51c \ \ if (!opt_servers)' clients/memflush.cc \
+    && ./configure \
+    && make -s -j$(nproc) \
+    && make install \
 && source /etc/profile \
 && cd ${WORK_DIR} \
 && curl -SL "https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz" -o memcached.tar.gz \
 && mkdir -p memcached \
 && tar -xf memcached.tar.gz -C memcached --strip-components=1 \
 && cd memcached \
-&& phpize \
-&& ./configure --disable-memcached-sasl \
-&& make -s -j$(nproc) \
-&& make install \
+    && phpize \
+    && ./configure --disable-memcached-sasl \
+    && make -s -j$(nproc) \
+    && make install \
 && echo "extension=memcached.so" > ${PHP_INI_DIR}/conf.d/50_memcached.ini \
 && php --ri memcached \
 # 安装amqp依赖、amqp
@@ -159,3 +159,4 @@ RUN mkdir -p ${WORK_DIR} \
 && echo -e "\033[32m😂 mission completed.\033[0m"
 
 EXPOSE 9000
+
