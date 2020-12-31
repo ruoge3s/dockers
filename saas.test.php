@@ -4,6 +4,11 @@
 
 /**
  * 测试数据库链接状态
+ * @param $host
+ * @param $port
+ * @param $user
+ * @param $password
+ * @param $database
  */
 function test_mysql($host, $port, $user, $password, $database)
 {
@@ -19,6 +24,12 @@ function test_mysql($host, $port, $user, $password, $database)
     echo "链接成功：{$dsn}\n";
 }
 
+/**
+ * 测试链接redis
+ * @param $host
+ * @param $port
+ * @param null $password
+ */
 function test_redis($host, $port, $password=null)
 {
     $r = new \Redis();
@@ -41,6 +52,17 @@ function test_redis($host, $port, $password=null)
 
 }
 
+/**
+ * 测试链接rabbitmq
+ * @param $host
+ * @param $port
+ * @param $login
+ * @param $password
+ * @throws AMQPChannelException
+ * @throws AMQPConnectionException
+ * @throws AMQPExchangeException
+ * @throws AMQPQueueException
+ */
 function test_rabbitmq($host, $port, $login, $password)
 {
     $conn = new AMQPConnection([
@@ -79,6 +101,7 @@ function test_rabbitmq($host, $port, $login, $password)
     // 发布消息
     $exchange->publish(date('Y-m-d H:i:s') . "发布一条消息", "TestQueue");
 
+    // 消费消息
     $queue = new AMQPQueue($channel);
     $queue->setName("TestQueue");
     $queue->setFlags(AMQP_DURABLE);
@@ -98,12 +121,25 @@ function test_rabbitmq($host, $port, $login, $password)
     }
 }
 
-function test_memcache()
+/**
+ * 测试链接memcache
+ * @param $host
+ * @param $port
+ */
+function test_memcache($host, $port)
 {
-    $m = new Memcached(["host" => "192.168.1.7", "port" => "11211"]);
+    $m = new Memcache();
+    if ($m->connect($host, $port)) {
+        $m->set('JustForTestMemcache', '2020');
+        echo "Memcache 链接成功" . $m->get('JustForTestMemcache');
+        $m->delete('JustForTestMemcache');
+    } else {
+        echo "Memcache链接失败";
+    }
 }
 
 
-test_mysql('192.168.1.7', 3306, 'root', 'Test2020,g0', 'mysql');
-test_redis('192.168.1.7', 6379, 'Gr2020');
+test_mysql('192.168.1.7', 3306, 'root', 'admin123', 'mysql');
+test_redis('192.168.1.7', 6379, 'admin123');
 test_rabbitmq('192.168.1.4', 5672, 'admin', 'admin123');
+test_memcache('192.168.1.7', 11211);
